@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react';
 import ReactToPrint from 'react-to-print';
-const Print = () => {
+import ReadPDF from '@/src/components/readPdf';
+import { Button } from 'antd';
+interface IProps {
+  fileUrl: string;
+}
+const Print = (props: IProps) => {
   const componentRef = React.useRef(null);
 
   const onBeforeGetContentResolve = React.useRef(null);
@@ -55,7 +60,24 @@ const Print = () => {
     // return <button onClick={() => alert('This will not work')}>Print this out!</button>;
 
     // Good
-    return <button>Print using a Functional Component</button>;
+    return (
+      <Button style={{ borderRadius: '12px' }}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth="2"
+          style={{ width: '16px', height: '16px' }}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
+          />
+        </svg>
+      </Button>
+    );
   }, []);
 
   useEffect(() => {}, []);
@@ -71,8 +93,10 @@ const Print = () => {
           removeAfterPrint
           trigger={reactToPrintTrigger}
         />
-        {loading && <p className="indicator">onBeforeGetContent: Loading...</p>}
-        <div ref={componentRef}>chinh print</div>
+        {loading && <p className="indicator"> Loading...</p>}
+        <div ref={componentRef}>
+          <ReadPDF fileUrl={props.fileUrl} />
+        </div>
       </div>
     </>
   );

@@ -22,11 +22,13 @@ interface AppLoginProps extends Partial<StoreProps> {
 interface AppLoginState {
   loading: boolean;
   isModalVisible: boolean;
+  fileUrl: string;
 }
 export class AppLogin extends React.Component<AppLoginProps, AppLoginState> {
   state: AppLoginState = {
     loading: false,
     isModalVisible: false,
+    fileUrl: '',
   };
   // private keyboard: React.RefObject<unknown>;
   // constructor(props: AppLoginProps | Readonly<AppLoginProps>) {
@@ -43,7 +45,19 @@ export class AppLogin extends React.Component<AppLoginProps, AppLoginState> {
   };
   handleResearch = (val: string) => {
     console.log('val', val);
-    this.setState({ isModalVisible: true });
+    $api
+      .reSearch({ codeSearch: val })
+      .then((resData) => {
+        console.log('data', resData);
+        this.setState({ isModalVisible: true, fileUrl: resData.data.url });
+      })
+      .catch((e) => {
+        console.log('e', e);
+        message.error('Đã có lỗi xảy ra');
+      })
+      .finally(() => {
+        console.log('run');
+      });
   };
   handleOk = () => {};
   render(): JSX.Element {
@@ -110,14 +124,15 @@ export class AppLogin extends React.Component<AppLoginProps, AppLoginState> {
           </Col>
         </Row>
         <Modal
-          title="Basic Modal"
+          title="Xem trước"
           visible={this.state.isModalVisible}
           onOk={this.handleOk}
+          width={'60%'}
           onCancel={() => {
             this.setState({ isModalVisible: false });
           }}
         >
-          <Print />
+          <Print fileUrl={this.state.fileUrl} />
         </Modal>
       </>
     );

@@ -30,6 +30,15 @@ const config: Configuration = {
       `${productName}-release-${version}.${buildVersion}`
     ),
   },
+  publish: [
+    {
+      provider: 'github',
+      private: true,
+      owner: 'chinhpro2k',
+      repo: 'research-electron-project',
+      token: '<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>',
+    },
+  ],
   win: {
     icon: ICON_ICO,
     target: ['nsis', 'msi', 'portable'],

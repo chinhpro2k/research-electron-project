@@ -12,7 +12,8 @@ import {
 import usbDetect from 'usb-detection';
 import { log } from '../log';
 import routes from '@/src/auto-routes';
-
+const { autoUpdater } = require('electron-updater');
+const isDev = require('electron-is-dev');
 const { NODE_ENV, port, host } = process.env;
 /** 创建新窗口相关选项 */
 export interface CreateWindowOptions {
@@ -121,6 +122,14 @@ export function createWindow(
     //   win.webContents.send('mouseclick');
     // });
     // ioHook.start();
+    if (isDev) {
+      // win.webContents.openDevTools({ mode: 'detach' });
+      // require('react-devtools-electron');
+    }
+
+    if (!isDev) {
+      autoUpdater.checkForUpdates();
+    }
     if (createConfig.saveWindowBounds) {
       const lastBounds = $tools.settings.windowBounds.get(key);
       if (lastBounds) win.setBounds(lastBounds);

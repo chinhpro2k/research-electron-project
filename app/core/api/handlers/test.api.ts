@@ -24,6 +24,19 @@ export function login(data: { username: string; password: string }) {
   });
 }
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function reSearch(data: { codeSearch: string }) {
+  // return $api.request(
+  //   `don-dvmc/public/ma-don/${data.codeSearch}/export/word`,
+  //   undefined,
+  //   {
+  //     method: 'GET',
+  //   }
+  // );
+  return axios.get(
+    `https://dhs.ptit.edu.vn/odoo-user-service/don-dvmc/public/ma-don/${data.codeSearch}/export/word/`
+  );
+}
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function loginKeycloak(data: {
   accessToken: string;
   clientPlatform: string;

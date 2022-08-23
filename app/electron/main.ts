@@ -1,40 +1,43 @@
 /* eslint-disable no-console */
 import { app, BrowserWindow, globalShortcut, Tray } from 'electron';
 import { creatAppTray } from './tray';
-const { autoUpdater, dialog } = require('electron');
-
+const { dialog } = require('electron');
+const { autoUpdater } = require('electron-updater');
 $tools.log.info(`Application <${$tools.APP_NAME}> launched.`);
 
 let tray: Tray;
 
 app.allowRendererProcessReuse = true;
-const server = 'https://your-deployment-url.com';
-const url = `${server}/update/${process.platform}/${app.getVersion()}`;
+// const server = 'https://your-deployment-url.com';
+// const url = `${server}/update/${process.platform}/${app.getVersion()}`;
 
-setInterval(() => {
-  autoUpdater.checkForUpdates();
-}, 60000);
+// setInterval(() => {
+//   autoUpdater.checkForUpdates();
+// }, 60000);
 
-autoUpdater.setFeedURL({ url });
-
-autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-  const dialogOpts = {
-    type: 'info',
-    buttons: ['Restart', 'Later'],
-    title: 'Application Update',
-    message: process.platform === 'win32' ? releaseNotes : releaseName,
-    detail:
-      'A new version has been downloaded. Restart the application to apply the updates.',
-  };
-
-  dialog.showMessageBox(dialogOpts).then((returnValue) => {
-    if (returnValue.response === 0) autoUpdater.quitAndInstall();
-  });
-});
-autoUpdater.on('error', (message) => {
-  console.error('There was a problem updating the application');
-  console.error(message);
-});
+// autoUpdater.setFeedURL({ url });
+//
+// autoUpdater.on(
+//   'update-downloaded',
+//   (event: any, releaseNotes: any, releaseName: any) => {
+//     const dialogOpts = {
+//       type: 'info',
+//       buttons: ['Restart', 'Later'],
+//       title: 'Application Update',
+//       message: process.platform === 'win32' ? releaseNotes : releaseName,
+//       detail:
+//         'A new version has been downloaded. Restart the application to apply the updates.',
+//     };
+//
+//     dialog.showMessageBox(dialogOpts).then((returnValue) => {
+//       if (returnValue.response === 0) autoUpdater.quitAndInstall();
+//     });
+//   }
+// );
+// autoUpdater.on('error', (message) => {
+//   console.error('There was a problem updating the application');
+//   console.error(message);
+// });
 const appLock = app.requestSingleInstanceLock();
 if (!appLock) {
   // 作为第二个实例运行时, 主动结束进程
@@ -79,3 +82,34 @@ app.on('before-quit', () => {
     tray.destroy();
   }
 });
+autoUpdater.on(
+  'update-available',
+  (_event: any, releaseNotes: any, releaseName: any) => {
+    const dialogOpts = {
+      type: 'info',
+      buttons: ['Ok'],
+      title: 'Application Update',
+      message: process.platform === 'win32' ? releaseNotes : releaseName,
+      detail: 'A new version is being downloaded.',
+    };
+    // @ts-ignore
+    dialog.showMessageBox(dialogOpts, () => {});
+  }
+);
+
+autoUpdater.on(
+  'update-downloaded',
+  (_event: any, releaseNotes: any, releaseName: any) => {
+    const dialogOpts = {
+      type: 'info',
+      buttons: ['Restart', 'Later'],
+      title: 'Application Update',
+      message: process.platform === 'win32' ? releaseNotes : releaseName,
+      detail:
+        'A new version has been downloaded. Restart the application to apply the updates.',
+    };
+    dialog.showMessageBox(dialogOpts).then((returnValue) => {
+      if (returnValue.response === 0) autoUpdater.quitAndInstall();
+    });
+  }
+);
