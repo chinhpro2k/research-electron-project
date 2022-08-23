@@ -122,8 +122,8 @@
     "redux-thunk": "^2.3.0",
     "remixicon": "^2.5.0",
     "styled-components": "^5.3.5",
-    "update-electron-app": "^2.0.1",
     "usb-detection": "^4.10.0",
+    "update-electron-app": "^2.0.1",
     "webpack-node-externals": "^3.0.0"
   },
   "iohook": {
