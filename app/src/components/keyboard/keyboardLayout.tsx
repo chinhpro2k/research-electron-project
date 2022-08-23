@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
-import { Button, Input } from 'antd';
+import { Button, Input, message } from 'antd';
 interface IProps {
   handleResearch: (value: string) => void;
 }
@@ -22,8 +22,8 @@ const KeyboardLayout = (props: IProps) => {
     const { target } = e;
     if (node) {
       if (!node.contains(target)) {
-        console.log('out');
         setIsShowKeyboard(false);
+        setInput('');
       }
     }
   };

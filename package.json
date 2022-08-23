@@ -88,6 +88,8 @@
     "@ant-design/icons": "^4.7.0",
     "@react-keycloak/web": "^3.4.0",
     "@types/humps": "^2.0.1",
+    "@types/react-pdf": "^5.7.2",
+    "@types/styled-components": "^5.1.26",
     "audio-react-recorder": "^1.0.4",
     "axios": "^0.21.1",
     "chalk": "^4.1.0",
@@ -108,6 +110,7 @@
     "react-dnd": "^14.0.3",
     "react-dnd-html5-backend": "^14.0.1",
     "react-dom": "^17.0.2",
+    "react-pdf": "^5.7.2",
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
     "react-simple-keyboard": "^3.4.189",
@@ -116,8 +119,9 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "remixicon": "^2.5.0",
-    "update-electron-app": "^2.0.1",
+    "styled-components": "^5.3.5",
     "usb-detection": "^4.10.0",
+    "update-electron-app": "^2.0.1",
     "webpack-node-externals": "^3.0.0"
   },
   "iohook": {
